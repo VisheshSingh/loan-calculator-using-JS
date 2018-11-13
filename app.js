@@ -1,10 +1,13 @@
-document
-  .getElementById("loan-form")
-  .addEventListener("submit", calculateResults);
-
-function calculateResults(e) {
+document.getElementById("loan-form").addEventListener("submit", function(e) {
   e.preventDefault();
 
+  document.getElementById("results").style.display = "none";
+  document.getElementById("loading").style.display = "block";
+
+  setTimeout(calculateResults, 2000);
+});
+
+function calculateResults() {
   const amount = document.getElementById("amount");
   const interest = document.getElementById("interest");
   const years = document.getElementById("years");
@@ -24,12 +27,17 @@ function calculateResults(e) {
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayment).toFixed(2);
     totalInterest.value = (monthly * calculatedPayment - principal).toFixed(2);
+
+    document.getElementById("results").style.display = "block";
+    document.getElementById("loading").style.display = "none";
   } else {
     showError("Please check your numbers");
   }
 }
 
 function showError(err) {
+  document.getElementById("results").style.display = "none";
+  document.getElementById("loading").style.display = "none";
   // create a div
   const errorDiv = document.createElement("div");
 
